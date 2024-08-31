@@ -1,40 +1,29 @@
-import { StyleSheet, Text, View, TextInput } from 'react-native';
-import React, {useState} from 'react';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import LoginPage from './src/screens/LoginPage';
+import SignupPage from './src/screens/SignupPage';
 
+const Stack = createNativeStackNavigator();
 
-export default function App() {
-
-  const [discordUser, SetDiscordUser] = useState('')
-  const [discordId, setDiscordId] = useState()
-  const [state, setState] = useState()
-
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Discord Username</Text>
-      <TextInput style={styles.TextInputStyle} placeholder='Enter Discord Username'/>
+    <NavigationContainer>
 
-      <Text>Discord ID</Text>
-      <TextInput keyboardType='numeric' style={styles.TextInputStyle} placeholder='Enter Discord ID'/>
+    <Stack.Navigator screenOptions={{headerShown:false}}>
+    <Stack.Screen
+          name="Login"
+          component={LoginPage}
+        />
+        <Stack.Screen name="Signup" component={SignupPage} />
+    </Stack.Navigator>
 
-      
-    </View>
+    </NavigationContainer>
+    
   )
 }
 
-const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    backgroundColor:'#fff',
-    alignItems:'center',
-    justifyContent:'center',
-  },
-  TextInputStyle:{
-    borderBottomWidth:1,
-    width:'80%',
-    height:50,
-    borderRadius:20,
-    marginVertical:10,
-    textAlign:'center',
-    
-  }
-})
+export default App
+
+const styles = StyleSheet.create({})
