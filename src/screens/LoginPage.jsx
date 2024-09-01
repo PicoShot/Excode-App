@@ -13,12 +13,13 @@ import { setIsLoading, login } from "../redux/userSlice";
 
 const LoginPage = ({ navigation }) => {
 
-  const {email, setEmail} = useState('')
-  const {password, setPassword} = useState('')
+  const [email, setEmail] = useState('')
+  console.log(email)
+  const [password, setPassword] = useState('')
+  console.log(password)
 
   // userSlice read inside datas
   const { isLoading } = useSelector((state) => state.user)
-
 
   // userSlice use or edit datas
   const dispatch = useDispatch()
