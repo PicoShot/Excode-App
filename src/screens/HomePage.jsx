@@ -3,7 +3,7 @@ import React from 'react'
 
 const HomePage = () => {
   return (
-    <View style={styles.container}>
+    <View>
       <Text>HomePage</Text>
     </View>
   )
@@ -12,9 +12,5 @@ const HomePage = () => {
 export default HomePage
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
-  }
+
 })

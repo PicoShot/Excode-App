@@ -3,7 +3,7 @@ import React from 'react'
 
 const ExContainer = ({ children }) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.exContainer}>
         <StatusBar barStyle="light-content" />
         {children}
     </SafeAreaView>
@@ -13,7 +13,7 @@ const ExContainer = ({ children }) => {
 export default ExContainer
 
 const styles = StyleSheet.create({
-    container: {
+    exContainer: {
         flex: 1,
         backgroundColor: "#000814",
         alignItems: "center",

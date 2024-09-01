@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
-import {ExText} from '.';
+import ExText from './ExText';
 
 const ExHyperText = ({ exText, exOnPress, exColor = 'gray', exTop=0 }) => {
   return (
@@ -12,4 +12,4 @@ const ExHyperText = ({ exText, exOnPress, exColor = 'gray', exTop=0 }) => {
 
 export default ExHyperText;
 
-const styles = StyleSheet.create({});
+//const styles = StyleSheet.create({});

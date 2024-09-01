@@ -24,8 +24,6 @@ const styles = StyleSheet.create({
     inputContainer: {
         width: "80%",
         borderColor:'white',
-        //alignItems:'center',
-        //justifyContent:'center',
         maxWidth: 500,
         marginVertical:5
       },
