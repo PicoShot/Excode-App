@@ -42,7 +42,7 @@ const LoginPage = ({ navigation }) => {
         exTitle="Email"
         exKeyboad="email-address"
         exIsSecure={false}
-        exOnChangeText={(email) => dispatch(setEmail(email))}
+        exOnChangeText={(email) => setEmail(email)}
         exValue={email}
         exPlaceholder="Enter Your Email"
       />
@@ -51,7 +51,7 @@ const LoginPage = ({ navigation }) => {
         exTitle="Password"
         exKeyboad="default"
         exIsSecure={true}
-        exOnChangeText={(password) => dispatch(setPassword(password))}
+        exOnChangeText={(password) => setPassword(password)}
         exValue={password}
         exPlaceholder="Enter Your Password"
       />
