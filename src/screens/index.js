@@ -2,6 +2,7 @@ import HomePage from "./HomePage";
 import ProfilePage from "./ProfilePage";
 import LoginPage from "./LoginPage";
 import SignupPage from "./SignupPage";
+import ResetPage from "./ResetPage"
 
 
 export {
@@ -9,4 +10,5 @@ export {
     ProfilePage,
     LoginPage,
     SignupPage,
+    ResetPage,
 }

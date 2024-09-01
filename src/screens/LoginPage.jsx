@@ -1,69 +1,79 @@
-import {StyleSheet, Image,} from "react-native";
+import { StyleSheet, Image } from "react-native";
 import React, { useState } from "react";
-import { ExTextInput, ExLoading, ExText, ExButton, ExContainer, } from "../components";
+import {
+  ExTextInput,
+  ExLoading,
+  ExText,
+  ExButton,
+  ExContainer,
+  ExHyperText,
+} from "../components";
 
-const LoginPage = (props) => {
+const LoginPage = ({ navigation }) => {
   const [isLoading, SetIsLoading] = useState(false);
   const [email, SetEmail] = useState("");
   const [password, setPassword] = useState("");
   const [result, setResults] = useState("");
 
-  console.log("_______________________________");
-  console.log(`isLoading: ${isLoading}`);
-  console.log(email ? `Email: ${email}` : "Email: undefined");
-  console.log(password ? "Pin: " + parseInt(password, 10) : "Pin: undefineSd");
-
   return (
     <ExContainer>
-      
-
-      <ExText exText='Welcome' exSize={50} exMarginBottom={60} exFontWidth='bold'/>
+      <ExText
+        exText="Welcome"
+        exSize={50}
+        exMarginBottom={60}
+        exFontWidth="bold"
+      />
 
       <Image
         style={styles.imageStyle}
         source={require("../../assets/images/login.png")}
       />
-      
-      <ExTextInput
-      style={styles.test}
-      exTitle='Email'
-      exKeyboad='email-address'
-      exIsSecure={false}
-      exOnChangeText={SetEmail}
-      exValue={email}
-      exPlaceholder='Enter Your Email'
-      />
 
       <ExTextInput
-      exTitle='Password'
-      exKeyboad='default'
-      exIsSecure={true}
-      exOnChangeText={setPassword}
-      exValue={password}
-      exPlaceholder='Enter Your Password'
+        exTitle="Email"
+        exKeyboad="email-address"
+        exIsSecure={false}
+        exOnChangeText={SetEmail}
+        exValue={email}
+        exPlaceholder="Enter Your Email"
       />
 
-      <ExButton 
-      exTitle='Login' 
-      exColor='#003566' 
-      exPressedColor='#001D3D' 
-      exOnPress={() => SetIsLoading(true)}
-      exWidth='60%'
-      exMaxWidth={300}
+      <ExTextInput
+        exTitle="Password"
+        exKeyboad="default"
+        exIsSecure={true}
+        exOnChangeText={setPassword}
+        exValue={password}
+        exPlaceholder="Enter Your Password"
       />
 
-      <ExButton 
-      exTitle='SignUp' 
-      exColor='#ffc300' 
-      exPressedColor='#ffd60a' 
-      exOnPress={() => props.navigation.navigate("Signup")}
-      exWidth='50%'
-      exMaxWidth={250}
+      <ExButton
+        exTitle="Login"
+        exColor="#003566"
+        exPressedColor="#001D3D"
+        exOnPress={() => SetIsLoading(true)}
+        exWidth="60%"
+        exMaxWidth={300}
       />
 
-      {isLoading ? (
-        <ExLoading changeIsLoading={() => SetIsLoading(false)} />
-      ) : null}
+      <ExButton
+        exTitle="SignUp"
+        exColor="#ffc300"
+        exPressedColor="#ffd60a"
+        exOnPress={() => navigation.navigate("Signup")}
+        exWidth="50%"
+        exMaxWidth={250}
+      />
+
+      <ExHyperText
+        exText="Forgot password? Click here"
+        exOnPress={() => navigation.navigate("Reset")}
+        exTop={30}
+      />
+
+      {isLoading 
+      ? (<ExLoading changeIsLoading={() => SetIsLoading(false)} />) 
+      : null}
     </ExContainer>
   );
 };
