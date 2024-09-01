@@ -4,6 +4,7 @@
 node_modules/
 .idea/
 .vscode/
+firebase.config.js
 
 # Expo
 .expo/
