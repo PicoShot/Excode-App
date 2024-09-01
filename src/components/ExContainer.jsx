@@ -1,12 +1,12 @@
-import { StyleSheet, View, StatusBar, } from 'react-native'
+import { StyleSheet, View, StatusBar, SafeAreaView } from 'react-native'
 import React from 'react'
 
 const ExContainer = ({ children }) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
         {children}
-    </View>
+    </SafeAreaView>
   )
 }
 

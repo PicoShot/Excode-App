@@ -1,24 +1,23 @@
 import { StyleSheet, View, Image } from "react-native";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   ExButton,
   ExText,
   ExLoading,
   ExTextInput,
   ExContainer,
+  ExHyperText,
 } from "../components";
 
-const SignupPage = () => {
-
+const SignupPage = ({ navigation }) => {
   const [isLoading, SetIsLoading] = useState(false);
-  const [fullName, setFullName] = useState('');
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [result, setResults] = useState("");
 
   return (
     <ExContainer>
-
       <ExText
         exText="SignUp"
         exSize={50}
@@ -66,6 +65,14 @@ const SignupPage = () => {
         exWidth="60%"
         exMaxWidth={300}
       />
+
+      <ExHyperText
+        exText="Already have account? Click here"
+        exOnPress={() => navigation.navigate("Login")}
+        exTop={30}
+      />
+
+      {isLoading ? <ExLoading changeIsLoading={() => SetIsLoading(false)} /> : null}
 
     </ExContainer>
   );

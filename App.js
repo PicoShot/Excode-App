@@ -1,10 +1,14 @@
-import React from 'react'
-import RootNavigation from './src/navigation/rootNavigation'
-
-
+import React from "react";
+import RootNavigation from "./src/navigation/rootNavigation";
+import { Provider } from "react-redux";
+import { exStore } from "./src/redux/exStore";
 
 const App = () => {
-  return <RootNavigation/>
-}
+  return (
+    <Provider store={exStore}>
+      <RootNavigation />
+    </Provider>
+  );
+};
 
-export default App
+export default App;

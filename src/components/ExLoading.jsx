@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, ActivityIndicator, Pressable } from 'react-native';
 import React from 'react'
 
-const loading = (props) => {
+const loading = ({changeIsLoading}) => {
   return (
     <View style={styles.container}>
         <ActivityIndicator size={'large'} color={'#4361ee'}/>
       <Text style={styles.loadingText}>Please wait while loading...</Text>
       <Pressable 
-        onPress={() => props.changeIsLoading()}
+        onPress={() => changeIsLoading()}
         style={[{}, styles.closeButtonContainer]}>
         <Text style={styles.closeButton}> Cencel </Text>
         </Pressable>

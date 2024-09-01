@@ -1,5 +1,5 @@
 import { StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
   ExTextInput,
   ExLoading,
@@ -8,12 +8,21 @@ import {
   ExContainer,
   ExHyperText,
 } from "../components";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsLoading, login } from "../redux/userSlice";
 
 const LoginPage = ({ navigation }) => {
-  const [isLoading, SetIsLoading] = useState(false);
-  const [email, SetEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [result, setResults] = useState("");
+
+  const {email, setEmail} = useState('')
+  const {password, setPassword} = useState('')
+
+  // userSlice read inside datas
+  const { isLoading } = useSelector((state) => state.user)
+
+
+  // userSlice use or edit datas
+  const dispatch = useDispatch()
+
 
   return (
     <ExContainer>
@@ -33,7 +42,7 @@ const LoginPage = ({ navigation }) => {
         exTitle="Email"
         exKeyboad="email-address"
         exIsSecure={false}
-        exOnChangeText={SetEmail}
+        exOnChangeText={(email) => dispatch(setEmail(email))}
         exValue={email}
         exPlaceholder="Enter Your Email"
       />
@@ -42,7 +51,7 @@ const LoginPage = ({ navigation }) => {
         exTitle="Password"
         exKeyboad="default"
         exIsSecure={true}
-        exOnChangeText={setPassword}
+        exOnChangeText={(password) => dispatch(setPassword(password))}
         exValue={password}
         exPlaceholder="Enter Your Password"
       />
@@ -51,7 +60,7 @@ const LoginPage = ({ navigation }) => {
         exTitle="Login"
         exColor="#003566"
         exPressedColor="#001D3D"
-        exOnPress={() => SetIsLoading(true)}
+        exOnPress={() => dispatch(login({email, password}))}
         exWidth="60%"
         exMaxWidth={300}
       />
@@ -72,7 +81,7 @@ const LoginPage = ({ navigation }) => {
       />
 
       {isLoading 
-      ? (<ExLoading changeIsLoading={() => SetIsLoading(false)} />) 
+      ? (<ExLoading changeIsLoading={() => dispatch(setIsLoading(false))} />) 
       : null}
     </ExContainer>
   );
