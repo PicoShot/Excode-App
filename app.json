@@ -1,27 +1,28 @@
 {
   "expo": {
-    "name": "excode",
+    "name": "Excode App",
     "slug": "excode",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/images/login.png",
+    "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/login.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000814"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/images/login.png",
+        "backgroundColor": "#000814"
+      },
+      "package": "com.picoshot.excode"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/images/login.png"
     },
     "extra": {
       "eas": {

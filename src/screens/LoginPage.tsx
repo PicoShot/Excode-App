@@ -12,18 +12,19 @@ const LoginPage = (props: { navigation: { navigate: (arg0: string) => void; }; }
     console.log(`isLoading: ${isLoading}`)
     console.log( email ? `Email: ${email}` : 'Email: undefined')
     console.log(password ? 'Pin: '+ parseInt(password, 10) : 'Pin: undefined')
+
   
   
     return (
       <View style={styles.container}>
         <StatusBar barStyle='light-content' />
         <Text style={[{fontSize:40, textAlign:'auto'},styles.TextStyle]}>Welcome {result} </Text>
-  
+
         <Image 
         style={styles.imageStyle}
         source={require('../../assets/images/login.png')}
         />
-  
+
         <Text style={styles.TextStyle}>Email</Text>
         <TextInput
         placeholderTextColor='gray'
@@ -120,6 +121,14 @@ const styles = StyleSheet.create({
     },
     imageStyle:{
       width:150,
-      height:150
-    }
+      height:150,
+      shadowColor: "#003566",
+      shadowOffset: {
+	    width: 0,
+	    height: 2,
+      },
+      shadowOpacity: 0.58,
+      shadowRadius: 15.00,
+      elevation: 24,
+    },
   })
