@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View, ActivityIndicator, Pressable } from 'react-native';
 import React from 'react'
 
-const loading = (props: { changeIsLoading: () => void; }) => {
+const loading = (props) => {
   return (
     <View style={styles.container}>
-        <Pressable 
+        <ActivityIndicator size={'large'} color={'#4361ee'}/>
+      <Text style={styles.loadingText}>Please wait while loading...</Text>
+      <Pressable 
         onPress={() => props.changeIsLoading()}
         style={[{}, styles.closeButtonContainer]}>
-        <Text style={styles.closeButton}> X </Text>
+        <Text style={styles.closeButton}> Cencel </Text>
         </Pressable>
-        <ActivityIndicator size={'large'} color={'#4361ee'}/>
-      <Text style={styles.loadingText}>loading...</Text>
     </View>
   )
 }
@@ -31,22 +31,21 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         fontSize:16,
         color:'white',
-        marginTop:10,
+        marginVertical:10,
     },
     closeButton:{
         fontWeight:'bold',
-        fontSize:30,
+        fontSize:20,
         //color:'white',
     },
     closeButtonContainer:{
-        width:50,
+        width:100,
         height:50,
         backgroundColor:'#003566',
         borderRadius:50,
         alignItems:'center',
         justifyContent:'center',
         position:'absolute',
-        top:20,
-        right:10
+        bottom:50
     }
 })
