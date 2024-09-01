@@ -8,7 +8,7 @@ const ExTextInput = ({exTitle, exKeyboard, exIsSecure, exOnChangeText, exValue, 
         <TextInput
           placeholderTextColor="gray"
           keyboardType={exKeyboard}
-          exIsSecure={exIsSecure}
+          secureTextEntry={exIsSecure}
           style={styles.TextInputStyle}
           placeholder={exPlaceholder}
           onChangeText={exOnChangeText}
