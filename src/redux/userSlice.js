@@ -1,6 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 
 export const login = createAsyncThunk(
   "user/login",
@@ -56,6 +65,35 @@ export const logout = createAsyncThunk("user/logout", async () => {
   }
 });
 
+export const register = createAsyncThunk("user/register", async ({username, email, password }) => {
+  try {
+    const auth = getAuth();
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    const token = user.stsTokenManager.accessToken;
+
+    const storage = getStorage();
+    const defaultProfilePicRef = ref(storage, 'profilePictures/Default.png');
+    const defaultProfilePicURL = await getDownloadURL(defaultProfilePicRef);
+
+    await updateProfile(user, {
+      displayName: username,
+      photoURL: defaultProfilePicURL,
+    });
+    console.log(defaultProfilePicURL);
+    
+
+    await sendEmailVerification(user);
+
+    await AsyncStorage.setItem("userToken", token);
+
+    return token;
+  } catch (error) {
+    console.error("Registration error:", error);
+    throw error;
+  }
+});
+
 const initialState = {
   isLoading: false,
   isAuth: false,
@@ -92,6 +130,7 @@ export const userSlice = createSlice({
         state.isAuth = false;
         state.error = action.error.message;
       })
+
       .addCase(autoLogin.pending, (state) => {
         state.isLoading = true;
         state.isAuth = false;
@@ -106,6 +145,7 @@ export const userSlice = createSlice({
         state.isAuth = false;
         state.token = null;
       })
+
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
       })
@@ -118,6 +158,21 @@ export const userSlice = createSlice({
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+        state.isAuth = false;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isAuth = true;
+        state.token = action.payload;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isAuth = false;
+        state.error = 'invalid Email or Password';
       });
   },
 });

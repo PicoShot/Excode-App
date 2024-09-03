@@ -8,13 +8,24 @@ import {
   ExContainer,
   ExHyperText,
 } from "../components";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../redux/userSlice";
 
 const SignupPage = ({ navigation }) => {
-  const [isLoading, SetIsLoading] = useState(false);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [result, setResults] = useState("");
+
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector(state => state.exUser)
+
+  const handleRegister = () => {
+    dispatch(register({fullName, email, password}))
+  }
+
+  if(isLoading){
+    <ExLoading/>
+  }
 
   return (
     <ExContainer>
@@ -36,7 +47,7 @@ const SignupPage = ({ navigation }) => {
         exIsSecure={false}
         exOnChangeText={setFullName}
         exValue={fullName}
-        exPlaceholder="Enter Your Email"
+        exPlaceholder="Enter Your Full Name"
       />
 
       <ExTextInput
@@ -61,7 +72,7 @@ const SignupPage = ({ navigation }) => {
         exTitle="SignUp"
         exColor="#003566"
         exPressedColor="#001D3D"
-        exOnPress={() => SetIsLoading(true)}
+        exOnPress={handleRegister}
         exWidth="60%"
         exMaxWidth={300}
       />
@@ -71,8 +82,6 @@ const SignupPage = ({ navigation }) => {
         exOnPress={() => navigation.navigate("Login")}
         exTop={30}
       />
-
-      {isLoading ? <ExLoading changeIsLoading={() => SetIsLoading(false)} /> : null}
 
     </ExContainer>
   );
