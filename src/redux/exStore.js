@@ -4,7 +4,7 @@ import { thunk } from 'redux-thunk'
 
 export const exStore = configureStore({
   reducer: {
-    user: userReducer
+    exUser: userReducer
   },
   middleware: (getDefaultMiddlware) => getDefaultMiddlware({serializableCheck:false})
 })
