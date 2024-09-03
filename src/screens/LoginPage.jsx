@@ -1,5 +1,5 @@
 import { StyleSheet, Image } from "react-native";
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   ExTextInput,
   ExLoading,
@@ -12,23 +12,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsLoading, login, autoLogin } from "../redux/userSlice";
 
 const LoginPage = ({ navigation }) => {
-
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // userSlice read inside datas
-  const { isLoading, error} = useSelector((state) => state.exUser)
+  const { isLoading, error } = useSelector((state) => state.exUser);
 
   // userSlice use or edit datas
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    
-    dispatch(autoLogin())
-
-  }, [])
-
+    dispatch(autoLogin());
+  }, []);
 
   return (
     <ExContainer>
@@ -66,7 +61,7 @@ const LoginPage = ({ navigation }) => {
         exTitle="Login"
         exColor="#003566"
         exPressedColor="#001D3D"
-        exOnPress={() => dispatch(login({email, password}))}
+        exOnPress={() => dispatch(login({ email, password }))}
         exWidth="60%"
         exMaxWidth={300}
       />
@@ -86,9 +81,9 @@ const LoginPage = ({ navigation }) => {
         exTop={30}
       />
 
-      {isLoading 
-      ? (<ExLoading changeIsLoading={() => dispatch(setIsLoading(false))} />) 
-      : null}
+      {isLoading ? (
+        <ExLoading changeIsLoading={() => dispatch(setIsLoading(false))} />
+      ) : null}
     </ExContainer>
   );
 };

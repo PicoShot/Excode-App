@@ -17,14 +17,14 @@ const SignupPage = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const { isLoading } = useSelector(state => state.exUser)
+  const { isLoading } = useSelector((state) => state.exUser);
 
   const handleRegister = () => {
-    dispatch(register({fullName, email, password}))
-  }
+    dispatch(register({ fullName, email, password }));
+  };
 
-  if(isLoading){
-    <ExLoading/>
+  if (isLoading) {
+    <ExLoading />;
   }
 
   return (
@@ -82,7 +82,6 @@ const SignupPage = ({ navigation }) => {
         exOnPress={() => navigation.navigate("Login")}
         exTop={30}
       />
-
     </ExContainer>
   );
 };

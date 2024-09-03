@@ -10,7 +10,7 @@ import {
   ExText,
 } from "../components";
 
-const ResetPage = ({navigation}) => {
+const ResetPage = ({ navigation }) => {
   const [isLoading, SetIsLoading] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -52,8 +52,9 @@ const ResetPage = ({navigation}) => {
         exTop={30}
       />
 
-      {isLoading ? <ExLoading changeIsLoading={() => SetIsLoading(false)} /> : null }
-
+      {isLoading ? (
+        <ExLoading changeIsLoading={() => SetIsLoading(false)} />
+      ) : null}
     </ExContainer>
   );
 };
@@ -73,6 +74,6 @@ const styles = StyleSheet.create({
     shadowRadius: 15.0,
     elevation: 24,
     resizeMode: "stretch",
-    marginVertical:10,
+    marginVertical: 10,
   },
 });

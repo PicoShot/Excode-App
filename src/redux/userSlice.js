@@ -10,7 +10,6 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
-
 export const login = createAsyncThunk(
   "user/login",
   async ({ email, password }) => {
@@ -65,34 +64,40 @@ export const logout = createAsyncThunk("user/logout", async () => {
   }
 });
 
-export const register = createAsyncThunk("user/register", async ({username, email, password }) => {
-  try {
-    const auth = getAuth();
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    const token = user.stsTokenManager.accessToken;
+export const register = createAsyncThunk(
+  "user/register",
+  async ({ username, email, password }) => {
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      const token = user.stsTokenManager.accessToken;
 
-    const storage = getStorage();
-    const defaultProfilePicRef = ref(storage, 'profilePictures/Default.png');
-    const defaultProfilePicURL = await getDownloadURL(defaultProfilePicRef);
+      const storage = getStorage();
+      const defaultProfilePicRef = ref(storage, "profilePictures/Default.png");
+      const defaultProfilePicURL = await getDownloadURL(defaultProfilePicRef);
 
-    await updateProfile(user, {
-      displayName: username,
-      photoURL: defaultProfilePicURL,
-    });
-    console.log(defaultProfilePicURL);
-    
+      await updateProfile(user, {
+        displayName: username,
+        photoURL: defaultProfilePicURL,
+      });
+      console.log(defaultProfilePicURL);
 
-    await sendEmailVerification(user);
+      await sendEmailVerification(user);
 
-    await AsyncStorage.setItem("userToken", token);
+      await AsyncStorage.setItem("userToken", token);
 
-    return token;
-  } catch (error) {
-    console.error("Registration error:", error);
-    throw error;
+      return token;
+    } catch (error) {
+      console.error("Registration error:", error);
+      throw error;
+    }
   }
-});
+);
 
 const initialState = {
   isLoading: false,
@@ -172,7 +177,7 @@ export const userSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.isAuth = false;
-        state.error = 'invalid Email or Password';
+        state.error = "invalid Email or Password";
       });
   },
 });
