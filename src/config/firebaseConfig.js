@@ -16,6 +16,18 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+if (__DEV__) {
+  appCheck = initializeAppCheck(app, {
+    provider: new AppCheckProviderFactory(() => new DebugProvider()),
+    isTokenAutoRefreshEnabled: true
+  });
+} else {
+  appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider('YOUR_RECAPTCHA_V3_SITE_KEY'),
+    isTokenAutoRefreshEnabled: true
+  });
+}
+
 if (Platform.OS === 'web') {
   auth = getAuth(app);
   auth.setPersistence(browserLocalPersistence);
