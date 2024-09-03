@@ -1,5 +1,5 @@
 import { StyleSheet, Image } from "react-native";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {
   ExTextInput,
   ExLoading,
@@ -9,7 +9,7 @@ import {
   ExHyperText,
 } from "../components";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsLoading, login } from "../redux/userSlice";
+import { setIsLoading, login, autoLogin } from "../redux/userSlice";
 
 const LoginPage = ({ navigation }) => {
 
@@ -21,6 +21,13 @@ const LoginPage = ({ navigation }) => {
 
   // userSlice use or edit datas
   const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    
+    dispatch(autoLogin())
+
+  }, [])
 
 
   return (

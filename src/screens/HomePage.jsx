@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, ToastAndroid } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Text, View, Pressable } from "react-native";
+import React, { useState, useEffect } from "react";
 import {
   ExButton,
   ExContainer,
@@ -8,12 +8,27 @@ import {
   ExText,
   ExTextInput,
 } from "../components";
-import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  addDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
+import { logout } from "../redux/userSlice";
+import { useDispatch } from "react-redux";
 
 const HomePage = () => {
   const [data, setData] = useState([]);
-  console.log('sended');
+  const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    getData();
+  }, [isSaved]);
+
+  const dispatch = useDispatch();
 
   // send data
   const sendData = async (title, content) => {
@@ -23,7 +38,7 @@ const HomePage = () => {
         content: content,
         date: Date.now(),
       });
-      console.log('sended');
+      console.log("sended");
     } catch (error) {
       console.error(error);
     }
@@ -31,16 +46,14 @@ const HomePage = () => {
 
   // get data
   const getData = async () => {
-    const allData = []
+    const allData = [];
     try {
-      
       const querySnapshot = await getDocs(collection(db, "notifies"));
       querySnapshot.forEach((doc) => {
         //setData([...data, doc.data()]);
-        allData.push(doc)
-        return allData
+        allData.push({ ...doc.data(), id: doc.id });
       });
-      console.log('recieved');
+      setData(allData);
     } catch (error) {
       console.error(error);
       throw error;
@@ -48,10 +61,10 @@ const HomePage = () => {
   };
 
   // delete data
-  const deleteData = async () => {
+  const deleteData = async (value) => {
     try {
-      await deleteDoc(doc(db, 'notifies', 'FVJgWF5NfZkECGHeUjfR'))
-      console.log('deleted');
+      await deleteDoc(doc(db, "notifies", value));
+      console.log("deleted");
     } catch (error) {
       console.error(error);
       throw error;
@@ -61,37 +74,49 @@ const HomePage = () => {
   // update data
   const updateData = async () => {
     try {
-      const notifiesData = doc(db, 'notifies', '4A291uOlkFmgpzk36F6m')
+      const notifiesData = doc(db, "notifies", "4A291uOlkFmgpzk36F6m");
       await updateDoc(notifiesData, {
-        content: 'changed test',
-      })
+        content: "changed23 test",
+      });
     } catch (error) {
       console.error(error);
       throw error;
     }
-  }
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <ExContainer>
-      <View>
-        <ExText exText="Notify" />
-        <ExText
-          exText={`${data[0]?.title}: ${data[0]?.content} Date: ${new Date(
-            data[0]?.date
-          ).toLocaleString("tr-TR")}`}
-        />
-        <ExText
-          exText={`${data[1]?.title}: ${data[1]?.content} Date: ${new Date(
-            data[1]?.date
-          ).toLocaleString("tr-TR")}`}
-        />
-      </View>
+      {data.map((value, index) => {
+        return (
+          <Pressable
+          onPress={() => {
+            deleteData(value.id);
+            setTimeout(() => {
+              setIsSaved(isSaved === false ? true : false);
+            }, 50);
+          }}
+            key={index}
+          >
+            <ExText exText={"id: " + value.id} />
+            <ExText exText={"title: " + value.title} />
+            <ExText exText={"content: " + value.content} />
+            <ExText exText={"date: " + new Date(value.date).getFullYear()} />
+          </Pressable>
+        );
+      })}
 
       <ExButton
         exTitle="Save Data"
         exColor="#003566"
         exPressedColor="#001D3D"
-        exOnPress={() => sendData("test", "test notify")}
+        exOnPress={() => {
+          sendData("test", "test notify"),
+            setIsSaved(isSaved === false ? true : false);
+        }}
         exWidth="60%"
         exMaxWidth={300}
       />
@@ -122,6 +147,14 @@ const HomePage = () => {
         exMaxWidth={300}
       />
 
+      <ExButton
+        exTitle="Logout"
+        exColor="#003566"
+        exPressedColor="#001D3D"
+        exOnPress={() => handleLogout()}
+        exWidth="60%"
+        exMaxWidth={300}
+      />
     </ExContainer>
   );
 };
