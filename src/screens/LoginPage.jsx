@@ -8,10 +8,14 @@ import {
   ExContainer,
   ExHyperText,
 } from "../components";
+
+
 import { useSelector, useDispatch } from "react-redux";
 import { setIsLoading, login, autoLogin } from "../redux/userSlice";
 
 const LoginPage = ({ navigation }) => {
+
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

@@ -17,7 +17,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
-import { logout } from "../redux/userSlice";
+import { logout, sendAuthenticatedRequest } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 
 const HomePage = () => {
@@ -30,59 +30,10 @@ const HomePage = () => {
 
   const dispatch = useDispatch();
 
-  // send data
-  const sendData = async (title, content) => {
-    try {
-      const decRef = await addDoc(collection(db, "notifies"), {
-        title: title,
-        content: content,
-        date: Date.now(),
-      });
-      console.log("sended");
-    } catch (error) {
-      console.error(error);
-    }
+  const handleSendRequest = () => {
+    dispatch(sendAuthenticatedRequest());
   };
 
-  // get data
-  const getData = async () => {
-    const allData = [];
-    try {
-      const querySnapshot = await getDocs(collection(db, "notifies"));
-      querySnapshot.forEach((doc) => {
-        //setData([...data, doc.data()]);
-        allData.push({ ...doc.data(), id: doc.id });
-      });
-      setData(allData);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-  // delete data
-  const deleteData = async (value) => {
-    try {
-      await deleteDoc(doc(db, "notifies", value));
-      console.log("deleted");
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-  // update data
-  const updateData = async () => {
-    try {
-      const notifiesData = doc(db, "notifies", "4A291uOlkFmgpzk36F6m");
-      await updateDoc(notifiesData, {
-        content: "changed23 test",
-      });
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -93,12 +44,12 @@ const HomePage = () => {
       {data.map((value, index) => {
         return (
           <Pressable
-          onPress={() => {
-            deleteData(value.id);
-            setTimeout(() => {
-              setIsSaved(isSaved === false ? true : false);
-            }, 50);
-          }}
+            onPress={() => {
+              deleteData(value.id);
+              setTimeout(() => {
+                setIsSaved(isSaved === false ? true : false);
+              }, 50);
+            }}
             key={index}
           >
             <ExText exText={"id: " + value.id} />
@@ -143,6 +94,15 @@ const HomePage = () => {
         exColor="#003566"
         exPressedColor="#001D3D"
         exOnPress={() => updateData()}
+        exWidth="60%"
+        exMaxWidth={300}
+      />
+
+      <ExButton
+        exTitle="Send Request"
+        exColor="#003566"
+        exPressedColor="#001D3D"
+        exOnPress={() => handleSendRequest()}
         exWidth="60%"
         exMaxWidth={300}
       />

@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import axios from "axios";
 
 export const login = createAsyncThunk(
   "user/login",
@@ -99,6 +100,41 @@ export const register = createAsyncThunk(
   }
 );
 
+export const sendAuthenticatedRequest = createAsyncThunk(
+  "user/sendAuthenticatedRequest",
+  async (_, { rejectWithValue }) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const idToken = await user.getIdToken();
+
+        const response = await axios.post(
+          "https://api.picoshot.net/api/adsoyad", 
+          {
+            ad:'abdulkadir',
+            soyad:'yur'
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        return response.data;
+      } else {
+        return rejectWithValue("User not logged in");
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+
 const initialState = {
   isLoading: false,
   isAuth: false,
@@ -178,6 +214,18 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isAuth = false;
         state.error = "invalid Email or Password";
+      })
+
+      .addCase(sendAuthenticatedRequest.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendAuthenticatedRequest.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log("Request respone:", action.payload);
+      })
+      .addCase(sendAuthenticatedRequest.rejected, (state, action) => {
+        state.isLoading = false;
+        console.error("Request failed:", action.payload);
       });
   },
 });
