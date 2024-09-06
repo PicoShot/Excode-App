@@ -19,10 +19,8 @@ const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // userSlice read inside datas
   const { isLoading, error } = useSelector((state) => state.exUser);
 
-  // userSlice use or edit datas
   const dispatch = useDispatch();
 
   useEffect(() => {

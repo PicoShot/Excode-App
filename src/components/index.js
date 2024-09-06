@@ -5,6 +5,8 @@ import ExButton from "./ExButton";
 import ExContainer from "./ExContainer";
 import ExHyperText from "./ExHyperText";
 import ExFooter from "./ExFooter";
+import ExAdSoyadList from "./ExAdSoyadList";
+import ExAileList from "./ExAileList";
 
 export {
   ExLoading,
@@ -14,4 +16,6 @@ export {
   ExContainer,
   ExHyperText,
   ExFooter,
+  ExAdSoyadList,
+  ExAileList,
 };

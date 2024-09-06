@@ -7,6 +7,8 @@ import {
   ExLoading,
   ExText,
   ExTextInput,
+  ExList,
+  ExTest,
 } from "../components";
 import {
   collection,
@@ -16,24 +18,18 @@ import {
   addDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../config/firebaseConfig";
-import { logout, sendAuthenticatedRequest } from "../redux/userSlice";
+import { Provider as PaperProvider } from "react-native-paper";
+import { logout } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [isSaved, setIsSaved] = useState(false);
+  const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    getData();
-  }, [isSaved]);
+  useEffect(() => {}, [isSaved]);
 
   const dispatch = useDispatch();
-
-  const handleSendRequest = () => {
-    dispatch(sendAuthenticatedRequest());
-  };
-
 
   const handleLogout = () => {
     dispatch(logout());
@@ -41,79 +37,42 @@ const HomePage = () => {
 
   return (
     <ExContainer>
-      {data.map((value, index) => {
-        return (
-          <Pressable
-            onPress={() => {
-              deleteData(value.id);
-              setTimeout(() => {
-                setIsSaved(isSaved === false ? true : false);
-              }, 50);
-            }}
-            key={index}
-          >
-            <ExText exText={"id: " + value.id} />
-            <ExText exText={"title: " + value.title} />
-            <ExText exText={"content: " + value.content} />
-            <ExText exText={"date: " + new Date(value.date).getFullYear()} />
-          </Pressable>
-        );
-      })}
-
-      <ExButton
-        exTitle="Save Data"
-        exColor="#003566"
-        exPressedColor="#001D3D"
-        exOnPress={() => {
-          sendData("test", "test notify"),
-            setIsSaved(isSaved === false ? true : false);
-        }}
-        exWidth="60%"
-        exMaxWidth={300}
+      <ExText
+        exText="Excode Panel"
+        exSize={35}
+        exMarginBottom={60}
+        exFontWidth="bold"
       />
 
       <ExButton
-        exTitle="Get Data"
-        exColor="#003566"
-        exPressedColor="#001D3D"
-        exOnPress={() => getData()}
-        exWidth="60%"
-        exMaxWidth={300}
+        exOnPress={() => navigation.navigate("AdSoyad")}
+        exTitle="Ad Soyad"
+      />
+
+      <ExButton exOnPress={() => navigation.navigate("TC")} exTitle="TC" />
+
+      <ExButton exOnPress={() => navigation.navigate("Aile")} exTitle="Aile" />
+
+      <ExButton
+        exOnPress={() => console.log("Bakımda")}
+        exTitle="Sülale (Bakımda)"
       />
 
       <ExButton
-        exTitle="Delete Data"
-        exColor="#003566"
-        exPressedColor="#001D3D"
-        exOnPress={() => deleteData()}
-        exWidth="60%"
-        exMaxWidth={300}
-      />
-      <ExButton
-        exTitle="Update Data"
-        exColor="#003566"
-        exPressedColor="#001D3D"
-        exOnPress={() => updateData()}
-        exWidth="60%"
-        exMaxWidth={300}
+        exOnPress={() => navigation.navigate("TCGSM")}
+        exTitle="TC-GSM"
       />
 
       <ExButton
-        exTitle="Send Request"
-        exColor="#003566"
-        exPressedColor="#001D3D"
-        exOnPress={() => handleSendRequest()}
-        exWidth="60%"
-        exMaxWidth={300}
+        exOnPress={() => navigation.navigate("GSMTC")}
+        exTitle="GSM-TC"
       />
 
       <ExButton
+        exOnPress={handleLogout}
         exTitle="Logout"
-        exColor="#003566"
-        exPressedColor="#001D3D"
-        exOnPress={() => handleLogout()}
-        exWidth="60%"
-        exMaxWidth={300}
+        exColor="#C70039"
+        exPressedColor="#F94C10"
       />
     </ExContainer>
   );

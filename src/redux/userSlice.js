@@ -100,21 +100,23 @@ export const register = createAsyncThunk(
   }
 );
 
-export const sendAuthenticatedRequest = createAsyncThunk(
-  "user/sendAuthenticatedRequest",
-  async (_, { rejectWithValue }) => {
+export const sendAdSoyadRequest = createAsyncThunk(
+  "user/sendAdSoyadRequest",
+  async ({ ad, soyad, il, ilce } = {}) => {
     try {
       const auth = getAuth();
       const user = auth.currentUser;
-
+      
       if (user) {
         const idToken = await user.getIdToken();
 
         const response = await axios.post(
           "https://api.picoshot.net/api/adsoyad", 
           {
-            ad:'abdulkadir',
-            soyad:'yur'
+            ad: ad,
+            soyad: soyad,
+            il: il,
+            ilce: ilce,
           },
           {
             headers: {
@@ -126,14 +128,80 @@ export const sendAuthenticatedRequest = createAsyncThunk(
 
         return response.data;
       } else {
-        return rejectWithValue("User not logged in");
+        return { message: "User not found" };
       }
     } catch (error) {
-      return rejectWithValue(error.message);
+      return error.message;
     }
   }
 );
 
+export const sendTCRequest = createAsyncThunk(
+  "user/sendTCRequest",
+  async ({ tc } = {}) => {  // Use `tc` here instead of `TC`
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const idToken = await user.getIdToken();
+        //console.log(idToken);
+
+        const response = await axios.post(
+          "https://api.picoshot.net/api/tc",
+          {
+            tc: tc,  // Ensure this matches the API requirement
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        return response.data;
+      } else {
+        return { message: "User not found" };
+      }
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const sendAileRequest = createAsyncThunk(
+  "user/sendAileRequest",
+  async ({ tc } = {}) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const idToken = await user.getIdToken();
+
+        const response = await axios.post(
+          "https://api.picoshot.net/api/aile",
+          {
+            tc: tc,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        return response.data;
+      } else {
+        return { message: "User not found" };
+      }
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
 
 const initialState = {
   isLoading: false,
@@ -216,14 +284,33 @@ export const userSlice = createSlice({
         state.error = "invalid Email or Password";
       })
 
-      .addCase(sendAuthenticatedRequest.pending, (state) => {
+      .addCase(sendAdSoyadRequest.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(sendAuthenticatedRequest.fulfilled, (state, action) => {
+      .addCase(sendAdSoyadRequest.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log("Request respone:", action.payload);
       })
-      .addCase(sendAuthenticatedRequest.rejected, (state, action) => {
+      .addCase(sendAdSoyadRequest.rejected, (state, action) => {
+        state.isLoading = false;
+        console.error("Request failed:", action.payload);
+      })
+      .addCase(sendTCRequest.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendTCRequest.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(sendTCRequest.rejected, (state, action) => {
+        state.isLoading = false;
+        console.error("Request failed:", action.payload);
+      })
+      .addCase(sendAileRequest.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendAileRequest.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(sendAileRequest.rejected, (state, action) => {
         state.isLoading = false;
         console.error("Request failed:", action.payload);
       });

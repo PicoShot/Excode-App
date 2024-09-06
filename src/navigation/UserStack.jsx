@@ -1,7 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomePage, ProfilePage } from "../screens";
+import {
+  HomePage,
+  ProfilePage,
+  AdSoyadPage,
+  TCPage,
+  AilePage,
+  TCGSMPage,
+  GSMTCPage,
+} from "../screens";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,10 +20,14 @@ const UserStack = () => {
     >
       <Stack.Screen name="Home" component={HomePage} />
       <Stack.Screen name="Profile" component={ProfilePage} />
+      <Stack.Screen name="AdSoyad" component={AdSoyadPage} />
+      <Stack.Screen name="TC" component={TCPage} />
+      <Stack.Screen name="Aile" component={AilePage} />
+      <Stack.Screen name="TCGSM" component={TCGSMPage} />
+      <Stack.Screen name="GSMTC" component={GSMTCPage} />
     </Stack.Navigator>
   );
 };
 
 export default UserStack;
 
-const styles = StyleSheet.create({});

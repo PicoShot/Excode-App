@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import React from 'react'
 
-const ExTextInput = ({exTitle, exKeyboard, exIsSecure, exOnChangeText, exValue, exPlaceholder}) => {
+const ExTextInput = ({exTitle, exKeyboard, exIsSecure, exOnChangeText, exValue, exPlaceholder, exMarginVertical = 5}) => {
   return (
     <View style={styles.inputContainer}>
-        <Text style={styles.TextStyle}>{exTitle}</Text>
+        <Text style={[styles.TextStyle, {marginVertical:exMarginVertical}]}>{exTitle}</Text>
         <TextInput
           placeholderTextColor="gray"
           keyboardType={exKeyboard}
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
         width: "80%",
         borderColor:'white',
         maxWidth: 500,
-        marginVertical:5
       },
       TextInputStyle: {
         borderBottomWidth: 1,

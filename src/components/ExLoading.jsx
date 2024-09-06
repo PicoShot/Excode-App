@@ -6,11 +6,6 @@ const loading = ({changeIsLoading}) => {
     <View style={styles.container}>
         <ActivityIndicator size={'large'} color={'#4361ee'}/>
       <Text style={styles.loadingText}>Please wait while loading...</Text>
-      <Pressable 
-        onPress={() => changeIsLoading()}
-        style={[{}, styles.closeButtonContainer]}>
-        <Text style={styles.closeButton}> Cencel </Text>
-        </Pressable>
     </View>
   )
 }
@@ -33,19 +28,4 @@ const styles = StyleSheet.create({
         color:'white',
         marginVertical:10,
     },
-    closeButton:{
-        fontWeight:'bold',
-        fontSize:20,
-        //color:'white',
-    },
-    closeButtonContainer:{
-        width:100,
-        height:50,
-        backgroundColor:'#003566',
-        borderRadius:50,
-        alignItems:'center',
-        justifyContent:'center',
-        position:'absolute',
-        bottom:50
-    }
 })
