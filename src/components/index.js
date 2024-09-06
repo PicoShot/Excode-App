@@ -7,6 +7,8 @@ import ExHyperText from "./ExHyperText";
 import ExFooter from "./ExFooter";
 import ExAdSoyadList from "./ExAdSoyadList";
 import ExAileList from "./ExAileList";
+import ExTCList from "./ExTCList";
+import ExTCGSMList from "./ExTCGSMList";
 
 export {
   ExLoading,
@@ -18,4 +20,6 @@ export {
   ExFooter,
   ExAdSoyadList,
   ExAileList,
+  ExTCList,
+  ExTCGSMList,
 };

@@ -1,4 +1,4 @@
-import { StyleSheet, View, StatusBar, SafeAreaView, ScrollView } from "react-native";
+import { StyleSheet, StatusBar, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
 
 const ExContainer = ({ children }) => {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { Text } from "react-native";
 import React from "react";
 
 const ExText = ({
@@ -25,5 +25,3 @@ const ExText = ({
 };
 
 export default ExText;
-
-// const styles = StyleSheet.create({})

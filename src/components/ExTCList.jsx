@@ -1,9 +1,9 @@
 import * as React from "react";
 import { StyleSheet, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { DataTable } from "react-native-paper";
-import * as Clipboard from "expo-clipboard";
+import * as Clipboard from 'expo-clipboard';
 
-const ExAdSoyadList = ({ items }) => {
+const ExTCList = ({ items }) => {
   const [page, setPage] = React.useState(0);
   const [numberOfItemsPerPageList] = React.useState([10]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(10);
@@ -68,7 +68,7 @@ const ExAdSoyadList = ({ items }) => {
   );
 };
 
-export default ExAdSoyadList;
+export default ExTCList;
 
 const styles = StyleSheet.create({
   header: {

@@ -3,12 +3,10 @@ import React, { useState, useEffect } from "react";
 import {
   ExButton,
   ExContainer,
-  ExHyperText,
   ExLoading,
   ExText,
   ExTextInput,
-  ExAdSoyadList,
-  ExTest,
+  ExTCList,
 } from "../components";
 import { Provider as PaperProvider } from "react-native-paper";
 import { sendTCRequest } from "../redux/userSlice";
@@ -63,7 +61,7 @@ const TCPage = () => {
       />
 
       <PaperProvider>
-        <ExAdSoyadList items={data} />
+        <ExTCList items={data} />
       </PaperProvider>
 
       {isLoading ? (

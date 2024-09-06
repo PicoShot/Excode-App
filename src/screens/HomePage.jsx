@@ -1,33 +1,25 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import React, { useState, useEffect } from "react";
-import {
-  ExButton,
-  ExContainer,
-  ExHyperText,
-  ExLoading,
-  ExText,
-  ExTextInput,
-  ExList,
-  ExTest,
-} from "../components";
-import {
-  collection,
-  getDocs,
-  doc,
-  deleteDoc,
-  addDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { Provider as PaperProvider } from "react-native-paper";
+import { ExButton, ExContainer, ExText } from "../components";
 import { logout } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
+import { getAuth } from "firebase/auth";
 
 const HomePage = ({ navigation }) => {
-  const [data, setData] = useState([]);
-  const [isSaved, setIsSaved] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [displayName, setDisplayName] = useState(null);
+  const [photoURL, setPhotoURL] = useState(null);
 
-  useEffect(() => {}, [isSaved]);
+  useEffect(() => {
+    setTimeout(() => {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        setDisplayName(user.displayName);
+        setPhotoURL(user.photoURL);
+      }
+    }, 2000);
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -37,47 +29,75 @@ const HomePage = ({ navigation }) => {
 
   return (
     <ExContainer>
-      <ExText
-        exText="Excode Panel"
-        exSize={35}
-        exMarginBottom={60}
-        exFontWidth="bold"
-      />
+      <View style={styles.profileBox}>
+        <Pressable
+          style={styles.profileBox}
+          onPress={() => navigation.navigate("Profile")}
+        >
+          {photoURL ? (
+            <Image source={{ uri: photoURL }} style={styles.profileImage} />
+          ) : (
+            <Text>No Profile Picture</Text>
+          )}
+          <ExText exText={displayName ? displayName : "Unknown"} />
+        </Pressable>
+      </View>
+        <ExText
+          exText="Excode Panel (Beta)"
+          exSize={30}
+          exMarginBottom={60}
+          exFontWidth="bold"
+        />
 
-      <ExButton
-        exOnPress={() => navigation.navigate("AdSoyad")}
-        exTitle="Ad Soyad"
-      />
+        <ExButton
+          exOnPress={() => navigation.navigate("AdSoyad")}
+          exTitle="Ad Soyad"
+        />
 
-      <ExButton exOnPress={() => navigation.navigate("TC")} exTitle="TC" />
+        <ExButton exOnPress={() => navigation.navigate("TC")} exTitle="TC" />
 
-      <ExButton exOnPress={() => navigation.navigate("Aile")} exTitle="Aile" />
+        <ExButton
+          exOnPress={() => navigation.navigate("Aile")}
+          exTitle="Aile"
+        />
 
-      <ExButton
-        exOnPress={() => console.log("Bakımda")}
-        exTitle="Sülale (Bakımda)"
-      />
+        <ExButton
+          exOnPress={() => console.log("Yakında...")}
+          exTitle="Sülale (Yakında...)"
+        />
 
-      <ExButton
-        exOnPress={() => navigation.navigate("TCGSM")}
-        exTitle="TC-GSM"
-      />
+        <ExButton
+          exOnPress={() => navigation.navigate("TCGSM")}
+          exTitle="TC-GSM"
+        />
 
-      <ExButton
-        exOnPress={() => navigation.navigate("GSMTC")}
-        exTitle="GSM-TC"
-      />
+        <ExButton
+          exOnPress={() => navigation.navigate("GSMTC")}
+          exTitle="GSM-TC"
+        />
 
-      <ExButton
-        exOnPress={handleLogout}
-        exTitle="Logout"
-        exColor="#C70039"
-        exPressedColor="#F94C10"
-      />
+        <ExButton
+          exOnPress={handleLogout}
+          exTitle="Logout"
+          exColor="#C70039"
+          exPressedColor="#F94C10"
+        />
     </ExContainer>
   );
 };
 
 export default HomePage;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  profileBox: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  profileImage: {
+    top: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+});

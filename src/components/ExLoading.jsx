@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, ActivityIndicator, Pressable } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import React from 'react'
 
-const loading = ({changeIsLoading}) => {
+const loading = () => {
   return (
     <View style={styles.container}>
         <ActivityIndicator size={'large'} color={'#4361ee'}/>

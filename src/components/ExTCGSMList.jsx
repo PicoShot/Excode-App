@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { DataTable } from "react-native-paper";
 import * as Clipboard from "expo-clipboard";
 
-const ExAdSoyadList = ({ items }) => {
+const ExTCGSMList = ({ items }) => {
   const [page, setPage] = React.useState(0);
   const [numberOfItemsPerPageList] = React.useState([10]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(10);
@@ -24,25 +24,15 @@ const ExAdSoyadList = ({ items }) => {
     <ScrollView horizontal>
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title style={styles.header}>ID</DataTable.Title>
           <DataTable.Title style={styles.header}>TC</DataTable.Title>
-          <DataTable.Title style={styles.header}>ADI</DataTable.Title>
-          <DataTable.Title style={styles.header}>SOYADI</DataTable.Title>
-          <DataTable.Title style={styles.header}>DOGUMTARIHI</DataTable.Title>
-          <DataTable.Title style={styles.header}>IL</DataTable.Title>
-          <DataTable.Title style={styles.header}>ILCE</DataTable.Title>
-          <DataTable.Title style={styles.header}>ANNEADI</DataTable.Title>
-          <DataTable.Title style={styles.header}>ANNETC</DataTable.Title>
-          <DataTable.Title style={styles.header}>BABAADI</DataTable.Title>
-          <DataTable.Title style={styles.header}>BABATC</DataTable.Title>
-          <DataTable.Title style={styles.header}>UYRUK</DataTable.Title>
+          <DataTable.Title style={styles.header}>GSM</DataTable.Title>
         </DataTable.Header>
 
         {items.slice(from, to).map((item, itemIndex) => (
           <DataTable.Row key={itemIndex} style={styles.row}>
             {Object.keys(item).map((key, keyIndex) => (
               <TouchableOpacity
-                key={`${itemIndex}-${keyIndex}`} 
+                key={`${itemIndex}-${keyIndex}`}
                 onPress={() => copyToClipboard(item[key])}
                 style={styles.cell}
               >
@@ -68,7 +58,7 @@ const ExAdSoyadList = ({ items }) => {
   );
 };
 
-export default ExAdSoyadList;
+export default ExTCGSMList;
 
 const styles = StyleSheet.create({
   header: {

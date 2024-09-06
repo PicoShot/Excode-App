@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable} from "react-native";
 import ExText from "./ExText";
 
 const ExHyperText = ({ exText, exOnPress, exColor = "gray", exTop = 0 }) => {

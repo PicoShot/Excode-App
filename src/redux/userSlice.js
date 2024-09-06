@@ -7,6 +7,7 @@ import {
   sendEmailVerification,
   updateProfile,
 } from "firebase/auth";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import axios from "axios";
@@ -86,7 +87,6 @@ export const register = createAsyncThunk(
         displayName: username,
         photoURL: defaultProfilePicURL,
       });
-      console.log(defaultProfilePicURL);
 
       await sendEmailVerification(user);
 
@@ -106,12 +106,12 @@ export const sendAdSoyadRequest = createAsyncThunk(
     try {
       const auth = getAuth();
       const user = auth.currentUser;
-      
+
       if (user) {
         const idToken = await user.getIdToken();
 
         const response = await axios.post(
-          "https://api.picoshot.net/api/adsoyad", 
+          "https://api.picoshot.net/api/adsoyad",
           {
             ad: ad,
             soyad: soyad,
@@ -121,7 +121,7 @@ export const sendAdSoyadRequest = createAsyncThunk(
           {
             headers: {
               Authorization: `Bearer ${idToken}`,
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
           }
         );
@@ -138,24 +138,89 @@ export const sendAdSoyadRequest = createAsyncThunk(
 
 export const sendTCRequest = createAsyncThunk(
   "user/sendTCRequest",
-  async ({ tc } = {}) => {  // Use `tc` here instead of `TC`
+  async ({ tc } = {}) => {
     try {
       const auth = getAuth();
       const user = auth.currentUser;
 
       if (user) {
         const idToken = await user.getIdToken();
-        //console.log(idToken);
 
         const response = await axios.post(
           "https://api.picoshot.net/api/tc",
           {
-            tc: tc,  // Ensure this matches the API requirement
+            tc: tc,
           },
           {
             headers: {
               Authorization: `Bearer ${idToken}`,
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        return response.data;
+      } else {
+        return { message: "User not found" };
+      }
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const sendTCGSMRequest = createAsyncThunk(
+  "user/sendTCGSMRequest",
+  async ({ tc } = {}) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const idToken = await user.getIdToken();
+
+        const response = await axios.post(
+          "https://api.picoshot.net/api/tcgsm",
+          {
+            tc: tc,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        return response.data;
+      } else {
+        return { message: "User not found" };
+      }
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const sendGSMTCRequest = createAsyncThunk(
+  "user/sendGSMTCRequest",
+  async ({ gsm } = {}) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const idToken = await user.getIdToken();
+
+        const response = await axios.post(
+          "https://api.picoshot.net/api/gsmtc",
+          {
+            gsm: gsm,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+              "Content-Type": "application/json",
             },
           }
         );
@@ -188,7 +253,7 @@ export const sendAileRequest = createAsyncThunk(
           {
             headers: {
               Authorization: `Bearer ${idToken}`,
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
           }
         );
@@ -221,6 +286,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // login request
       .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.isAuth = false;
@@ -239,7 +305,7 @@ export const userSlice = createSlice({
         state.isAuth = false;
         state.error = action.error.message;
       })
-
+      // autoLogin request
       .addCase(autoLogin.pending, (state) => {
         state.isLoading = true;
         state.isAuth = false;
@@ -254,7 +320,7 @@ export const userSlice = createSlice({
         state.isAuth = false;
         state.token = null;
       })
-
+      // logout request
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
       })
@@ -268,7 +334,7 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-
+      // register request
       .addCase(register.pending, (state) => {
         state.isLoading = true;
         state.isAuth = false;
@@ -278,39 +344,63 @@ export const userSlice = createSlice({
         state.isAuth = true;
         state.token = action.payload;
       })
-      .addCase(register.rejected, (state, action) => {
+      .addCase(register.rejected, (state) => {
         state.isLoading = false;
         state.isAuth = false;
         state.error = "invalid Email or Password";
       })
-
+      // adsoyad request
       .addCase(sendAdSoyadRequest.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(sendAdSoyadRequest.fulfilled, (state, action) => {
+      .addCase(sendAdSoyadRequest.fulfilled, (state) => {
         state.isLoading = false;
       })
       .addCase(sendAdSoyadRequest.rejected, (state, action) => {
         state.isLoading = false;
         console.error("Request failed:", action.payload);
       })
+      // tc request
       .addCase(sendTCRequest.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(sendTCRequest.fulfilled, (state, action) => {
+      .addCase(sendTCRequest.fulfilled, (state) => {
         state.isLoading = false;
       })
       .addCase(sendTCRequest.rejected, (state, action) => {
         state.isLoading = false;
         console.error("Request failed:", action.payload);
       })
+      // aile request
       .addCase(sendAileRequest.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(sendAileRequest.fulfilled, (state, action) => {
+      .addCase(sendAileRequest.fulfilled, (state) => {
         state.isLoading = false;
       })
       .addCase(sendAileRequest.rejected, (state, action) => {
+        state.isLoading = false;
+        console.error("Request failed:", action.payload);
+      })
+      // TCGSM request
+      .addCase(sendTCGSMRequest.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendTCGSMRequest.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(sendTCGSMRequest.rejected, (state, action) => {
+        state.isLoading = false;
+        console.error("Request failed:", action.payload);
+      })
+      // GSMTC request
+      .addCase(sendGSMTCRequest.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendGSMTCRequest.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(sendGSMTCRequest.rejected, (state, action) => {
         state.isLoading = false;
         console.error("Request failed:", action.payload);
       });
