@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { register } from "../redux/userSlice";
 
 const SignupPage = ({ navigation }) => {
-  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,13 +20,8 @@ const SignupPage = ({ navigation }) => {
   const { isLoading } = useSelector((state) => state.exUser);
 
   const handleRegister = () => {
-    dispatch(register({ fullName, email, password }));
+    dispatch(register({ username, email, password }));
   };
-
-  if (isLoading) {
-    <ExLoading />;
-  }
-
   return (
     <ExContainer>
       <ExText
@@ -45,8 +40,8 @@ const SignupPage = ({ navigation }) => {
         exTitle="Full Name"
         exKeyboad="default"
         exIsSecure={false}
-        exOnChangeText={setFullName}
-        exValue={fullName}
+        exOnChangeText={setUsername}
+        exValue={username}
         exPlaceholder="Enter Your Full Name"
       />
 
@@ -82,6 +77,9 @@ const SignupPage = ({ navigation }) => {
         exOnPress={() => navigation.navigate("Login")}
         exTop={30}
       />
+      {isLoading ? (
+        <ExLoading changeIsLoading={() => dispatch(setIsLoading(false))} />
+      ) : null}
     </ExContainer>
   );
 };
