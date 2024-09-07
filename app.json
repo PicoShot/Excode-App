@@ -12,7 +12,8 @@
       "backgroundColor": "#000814"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.picoshot.excode"
     },
     "android": {
       "adaptiveIcon": {

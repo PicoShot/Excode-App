@@ -8,6 +8,7 @@ import TCPage from "./TCPage";
 import AilePage from "./AilePage";
 import TCGSMPage from "./TCGSMPage";
 import GSMTCPage from "./GSMTCPage";
+import SulalePage from "./SulalePage";
 
 export {
   HomePage,
@@ -20,4 +21,5 @@ export {
   AilePage,
   TCGSMPage,
   GSMTCPage,
+  SulalePage,
 };

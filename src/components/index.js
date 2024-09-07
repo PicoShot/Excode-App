@@ -9,6 +9,7 @@ import ExAdSoyadList from "./ExAdSoyadList";
 import ExAileList from "./ExAileList";
 import ExTCList from "./ExTCList";
 import ExTCGSMList from "./ExTCGSMList";
+import ExSulaleList from "./ExSulaleList";
 
 export {
   ExLoading,
@@ -22,4 +23,5 @@ export {
   ExAileList,
   ExTCList,
   ExTCGSMList,
+  ExSulaleList,
 };

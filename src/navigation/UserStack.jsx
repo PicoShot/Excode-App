@@ -8,6 +8,7 @@ import {
   AilePage,
   TCGSMPage,
   GSMTCPage,
+  SulalePage,
 } from "../screens";
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ const UserStack = () => {
       <Stack.Screen name="Aile" component={AilePage} />
       <Stack.Screen name="TCGSM" component={TCGSMPage} />
       <Stack.Screen name="GSMTC" component={GSMTCPage} />
+      <Stack.Screen name="Sulale" component={SulalePage} />
     </Stack.Navigator>
   );
 };

@@ -268,6 +268,39 @@ export const sendAileRequest = createAsyncThunk(
   }
 );
 
+export const sendSulaleRequest = createAsyncThunk(
+  "user/sendSulaleRequest",
+  async ({ tc } = {}) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const idToken = await user.getIdToken();
+
+        const response = await axios.post(
+          "https://api.picoshot.net/api/sulale",
+          {
+            tc: tc,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        return response.data;
+      } else {
+        return { message: "User not found" };
+      }
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const initialState = {
   isLoading: false,
   isAuth: false,
@@ -403,7 +436,18 @@ export const userSlice = createSlice({
       .addCase(sendGSMTCRequest.rejected, (state, action) => {
         state.isLoading = false;
         console.error("Request failed:", action.payload);
-      });
+      })
+      // sulale request
+      .addCase(sendSulaleRequest.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendSulaleRequest.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(sendSulaleRequest.rejected, (state, action) => {
+        state.isLoading = false;
+        console.error("Request failed:", action.payload);
+      })
   },
 });
 

@@ -44,25 +44,37 @@ const HomePage = ({ navigation }) => {
       <ExButton
         exOnPress={() => navigation.navigate("AdSoyad")}
         exTitle="Ad Soyad"
+        exMaxWidth={300}
       />
 
-      <ExButton exOnPress={() => navigation.navigate("TC")} exTitle="TC" />
-
-      <ExButton exOnPress={() => navigation.navigate("Aile")} exTitle="Aile" />
+      <ExButton
+        exOnPress={() => navigation.navigate("TC")}
+        exTitle="TC"
+        exMaxWidth={300}
+      />
 
       <ExButton
-        exOnPress={() => console.log("Yakında...")}
-        exTitle="Sülale (Yakında...)"
+        exOnPress={() => navigation.navigate("Aile")}
+        exTitle="Aile"
+        exMaxWidth={300}
+      />
+
+      <ExButton
+        exOnPress={() => navigation.navigate("Sulale")}
+        exTitle="Sülale"
+        exMaxWidth={300}
       />
 
       <ExButton
         exOnPress={() => navigation.navigate("TCGSM")}
         exTitle="TC-GSM"
+        exMaxWidth={300}
       />
 
       <ExButton
         exOnPress={() => navigation.navigate("GSMTC")}
         exTitle="GSM-TC"
+        exMaxWidth={300}
       />
     </ExContainer>
   );

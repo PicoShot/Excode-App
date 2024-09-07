@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ExButton,
   ExContainer,
   ExLoading,
   ExText,
   ExTextInput,
-  ExTCList,
+  ExSulaleList,
 } from "../components";
 import { Provider as PaperProvider } from "react-native-paper";
-import { sendTCRequest } from "../redux/userSlice";
+import { sendSulaleRequest } from "../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const TCPage = () => {
+const SulalePage = () => {
   const [data, setData] = useState([]);
   const [tc, setTC] = useState("");
 
@@ -20,7 +20,7 @@ const TCPage = () => {
 
   const handleSearchRequest = async (tc = null) => {
     try {
-      const response = await dispatch(sendTCRequest({ tc })).unwrap();
+      const response = await dispatch(sendSulaleRequest({ tc })).unwrap();
       if (response.data) {
         setData(response.data);
       }
@@ -31,9 +31,8 @@ const TCPage = () => {
 
   return (
     <ExContainer>
-
       <ExText
-        exText="TC"
+        exText="Sülale"
         exSize={30}
         exMarginBottom={10}
         exFontWidth="bold"
@@ -60,7 +59,7 @@ const TCPage = () => {
       />
 
       <PaperProvider>
-        <ExTCList items={data} />
+        <ExSulaleList items={data} />
       </PaperProvider>
 
       {isLoading ? (
@@ -70,5 +69,5 @@ const TCPage = () => {
   );
 };
 
-export default TCPage;
+export default SulalePage;
 
